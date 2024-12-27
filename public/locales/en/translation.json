@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "price": "Price",
+    "tryFree": "Try Free",
+    "cases": "Cases",
+    "blog": "Blog",
+    "about": "About"
+  },
+  "hero": {
+    "title": "Transform Your Stories into",
+    "subtitle": "Beautiful Anime Comics",
+    "description": "Experience the magic of AI-powered comic creation. Turn your ideas into stunning anime-style comics with just a few clicks. No artistic skills required.",
+    "tryFree": "Try Free Now",
+    "viewExamples": "View Examples"
+  },
+  "features": {
+    "title": "Why Choose ComicsAI?",
+    "subtitle": "Create professional-quality comics with ease using our advanced AI technology",
+    "aiPowered": {
+      "title": "AI-Powered Creation",
+      "description": "Our advanced AI understands your story and transforms it into stunning anime-style artwork"
+    },
+    "professional": {
+      "title": "Professional Quality",
+      "description": "Get high-quality, consistent artwork that matches professional manga standards"
+    },
+    "easyToUse": {
+      "title": "Easy to Use",
+      "description": "Simple interface that lets you create comics in minutes, no technical skills needed"
+    }
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Choose the plan that's right for you",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "hobby": {
+      "title": "Hobby",
+      "price": "$9",
+      "description": "Perfect for hobbyists and casual creators",
+      "features": [
+        "Up to 10 comics per month",
+        "Basic art styles",
+        "Standard resolution",
+        "Email support"
+      ]
+    },
+    "pro": {
+      "title": "Professional",
+      "price": "$29",
+      "description": "For professional creators and small teams",
+      "features": [
+        "Unlimited comics",
+        "All art styles",
+        "High resolution",
+        "Priority support",
+        "Commercial usage"
+      ]
+    },
+    "enterprise": {
+      "title": "Enterprise",
+      "price": "Custom",
+      "description": "For large organizations with custom needs",
+      "features": [
+        "Custom volume",
+        "Custom art styles",
+        "Ultra-high resolution",
+        "24/7 support",
+        "API access",
+        "Custom integration"
+      ]
+    }
+  }
+}
