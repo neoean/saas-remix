@@ -2,7 +2,7 @@
 
 A modern SaaS template built with Remix, perfect for AI-powered applications and SaaS tools.
 
-![Landing Page](./public/images/index.png)
+![Landing Page](/public/screenshot/index.png)
 
 ## Overview
 
@@ -10,7 +10,7 @@ SaaS Remix is a production-ready template for building modern SaaS applications.
 
 ## Demo
 
-Check out the live demo: [https://saas-remix.vercel.app](https://saas-remix.vercel.app)
+Check out the live demo: [https://comicsai.org](https://comicsai.org)
 
 ## Screenshots
 
@@ -18,13 +18,13 @@ Check out the live demo: [https://saas-remix.vercel.app](https://saas-remix.verc
 <summary>More screenshots</summary>
 
 ### Landing Page
-![Landing Page](./public/images/index.png)
+![Landing Page](https://github.com/neoean/saas-remix/public/screenshot/index.png)
 
 ### Pricing Page
-![Pricing Page](./public/images/pricing.png)
+![Pricing Page](https://github.com/neoean/saas-remix/public/screenshot/pricing.png)
 
 ### Blog Page
-![Blog Page](./public/images/blog.png)
+![Blog Page](https://github.com/neoean/saas-remix/public/screenshot/blog.png)
 
 </details>
 
