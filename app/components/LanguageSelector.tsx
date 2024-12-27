@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { useNavigate, useLocation, useParams } from '@remix-run/react';
 import clsx from 'clsx';
 
 const languages = [
@@ -24,11 +25,17 @@ const languages = [
 
 export default function LanguageSelector() {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === params.lang) || languages[0];
 
-  const changeLanguage = (code: string) => {
-    i18n.changeLanguage(code);
+  const changeLanguage = async (code: string) => {
+    const newPath = location.pathname.replace(/^\/[^/]+/, `/${code}`);
+    await i18n.changeLanguage(code);
+    console.log(newPath);
+    navigate(newPath, { replace: true });
   };
 
   return (

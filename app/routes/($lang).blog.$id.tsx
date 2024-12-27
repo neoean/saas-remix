@@ -1,4 +1,4 @@
-import type { MetaFunction, LoaderArgs } from "@remix-run/node";
+import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { motion } from "framer-motion";
@@ -56,7 +56,7 @@ const posts = {
   },
 };
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ params }: LoaderFunctionArgs) {
   const post = posts[params.id as keyof typeof posts];
   if (!post) {
     throw new Response("Not Found", { status: 404 });
@@ -68,7 +68,7 @@ export default function BlogPost() {
   const { post } = useLoaderData<typeof loader>();
 
   return (
-    <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-50 min-h-screen py-24 px-4 sm:px-6 lg:px-8">
       <article className="max-w-4xl mx-auto">
         <motion.header
           className="text-center"

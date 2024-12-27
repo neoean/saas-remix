@@ -4,15 +4,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  Link,
-  NavLink
+  useLoaderData,
+  LiveReload,
 } from "@remix-run/react";
 import { useEffect } from "react";
-import type { LinksFunction } from "@remix-run/node";
-import clsx from "clsx";
-import { useTranslation } from "react-i18next";
-import i18n from "./i18n";
-import LanguageSelector from "./components/LanguageSelector";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { I18nextProvider } from "react-i18next";
+import i18next from "./i18n";
+import { languageMiddleware, getLocale } from "./middleware/language";
+import Navigation from "~/components/Navigation";
+import Footer from "~/components/Footer";
 
 import "./tailwind.css";
 
@@ -29,138 +30,54 @@ export const links: LinksFunction = () => [
   },
 ];
 
-function Navigation() {
-  const { t } = useTranslation();
+export async function loader({ request }: LoaderFunctionArgs) {
+  // Check if we need to redirect to add language prefix
+  const languageRedirect = await languageMiddleware({ request, params: {}, context: {} });
+  if (languageRedirect) return languageRedirect;
 
-  return (
-    <nav className="fixed top-0 z-50 w-full">
-      <div className="absolute inset-0 bg-white/70 backdrop-blur-md"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">ComicsAI</span>
-            </Link>
-          </div>
-          <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.home')}
-            </NavLink>
-            <NavLink
-              to="/price"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.price')}
-            </NavLink>
-            <NavLink
-              to="/try-free"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.tryFree')}
-            </NavLink>
-            <NavLink
-              to="/cases"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.cases')}
-            </NavLink>
-            <NavLink
-              to="/blog"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.blog')}
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                clsx(
-                  'inline-flex items-center px-1 pt-1 text-sm font-medium',
-                  isActive
-                    ? 'border-b-2 border-primary-500 text-gray-900'
-                    : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                )
-              }
-            >
-              {t('nav.about')}
-            </NavLink>
-          </div>
-          <div className="flex items-center">
-            <LanguageSelector />
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
+  // Get the current locale from the URL
+  const locale = getLocale(request);
+  
+  return { locale };
 }
 
-function Layout({ children }: { children: React.ReactNode }) {
+function App() {
+  const { locale } = useLoaderData<typeof loader>();
+
   useEffect(() => {
-    // Initialize i18next
-    i18n.init();
-  }, []);
+    if (i18next.isInitialized) {
+      i18next.changeLanguage(locale);
+    } else {
+      i18next.init().then(() => {
+        i18next.changeLanguage(locale);
+      });
+    }
+  }, [locale]);
 
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <main className="pt-16">{children}</main>
-    </div>
+    <I18nextProvider i18n={i18next}>
+      <html lang={locale}>
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <div className="flex flex-col min-h-screen">
+            <Navigation />
+            <main className="flex-grow py-8 px-4 sm:px-6 lg:px-8">
+              <Outlet />
+            </main>
+            <Footer />
+          </div>
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    </I18nextProvider>
   );
 }
 
-export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Layout>
-          <Outlet />
-        </Layout>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
-}
+export default App;

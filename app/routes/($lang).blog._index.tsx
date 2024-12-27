@@ -56,7 +56,7 @@ const posts = [
 
 export default function BlogIndexPage() {
   return (
-    <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-50 min-h-screen py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center"
