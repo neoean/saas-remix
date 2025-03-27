@@ -12,6 +12,8 @@ SaaS Remix is a production-ready template for building modern SaaS applications.
 
 Check out the live demo: [https://comicsai.org](https://comicsai.org)
 
+<a href="https://comicsai.org" rel="noopener" > demo </a>
+
 ## Screenshots
 
 <details>
